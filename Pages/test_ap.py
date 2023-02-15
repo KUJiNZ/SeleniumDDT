@@ -18,11 +18,11 @@ class TestAP(unittest.TestCase, BasePage):
     def setUp(self):
         BasePage.__init__(self, webdriver.Chrome())
         self.locator = PageLocators()
-        # UTIL
+        # INIT JSON
         self.util = Utilities('D:/PythonRepos/SeleniumDDTPython/Pages/DATA/DATA.json')
-
+        self.expected = self.util.get_data()
         # INIT LOGGER
-        logger_file = "D:/PythonRepos/SeleniumDDT/Pages/Logs/" + 'test_ap_' + str(date.today()) + '.log'
+        logger_file = "D:/PythonRepos/SeleniumDDTPython/Pages/Logs/" + 'test_ap_' + str(date.today()) + '.log'
         log = Log("__example_test__ ", logger_file)
         self.logger = log.logger
 
@@ -34,10 +34,10 @@ class TestAP(unittest.TestCase, BasePage):
         """
         try:
             self.driver.get(os.getenv('URL'))
-            self.enter_text(self.locator.input_name, 'adad')
+            self.enter_text(self.locator.input_name, self.expected['fname'])
             x = self.driver.find_element(*self.locator.input_name).get_attribute('value')
-            self.assertEqual(x, 'adad')  # add assertion here
-            self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x} Expected:(x > 0 and not None)\n")
+            self.assertEqual(x, self.expected['fname'])  # add assertion here
+            self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['fname']}\n")
         except Exception as e:
             self.logger.exception(f"{self.test_name_input.__doc__}{e}")
             raise
