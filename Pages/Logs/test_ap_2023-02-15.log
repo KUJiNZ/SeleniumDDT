@@ -1,0 +1,35 @@
+02/15/2023 06:40:57PM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_search
+        Description:
+        
+Actual: adad Expected:(x > 0 and not None)
+ 
+02/15/2023 06:41:58PM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_search
+        Description:
+        
+Actual: adad Expected:(x > 0 and not None)
+ 
+02/15/2023 06:43:13PM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_search
+        Description:
+        
+Actual: adad Expected:(x > 0 and not None)
+ 
+02/15/2023 06:43:37PM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_search
+        Description:
+        
+Actual: adad Expected:(x > 0 and not None)
+ 
+02/15/2023 06:47:26PM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_search
+        Description:
+        
+Actual: adad Expected:(x > 0 and not None)
+ 
