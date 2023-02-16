@@ -17,7 +17,8 @@ load_dotenv('.env.test')
 class TestAP(unittest.TestCase, BasePage):
 
     def setUp(self):
-        BasePage.__init__(self, webdriver.Chrome())
+        # BasePage.__init__(self, webdriver.Chrome())
+        self.driver = webdriver.Chrome()
         self.locator = PageLocators()
         # INIT JSON
         self.util = Utilities('D:/PythonRepos/SeleniumDDTPython/Pages/DATA/DATA.json')
@@ -118,6 +119,95 @@ class TestAP(unittest.TestCase, BasePage):
         except Exception as e:
             # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
             self.logger.exception(f"{self.test_name_input.__doc__}{e}")
+            raise
+
+    def test_phone_input(self):
+        """
+        Name: Artiom
+        Function Name: test_phone_input
+        Description: testing input phone field
+        """
+        try:
+            self.enter_text(self.locator.phone, self.expected['phone'])
+            x = self.driver.find_element(*self.locator.phone).get_attribute('value')
+            self.assertEqual(x, self.expected['phone'])
+            self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['phone']}\n")
+        except Exception as e:
+            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.logger.exception(f"{self.test_name_input.__doc__}{e}")
+            raise
+
+    def test_radios(self):
+        """
+        Name: Artiom
+        Function Name: test_radios
+        Description: testing radios gender is working
+        """
+        try:
+            radios = self.driver.find_elements(*self.locator.radios_gender)
+            for i in range(len(radios)):
+                radios[i].click()
+                self.assertTrue(radios[i].is_selected())
+                self.logger.info(
+                    f"{self.test_radios.__doc__}\nActual: {radios[i].is_selected()}, Expected: {True}\n")
+        except Exception as e:
+            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.logger.exception(f"{self.test_radios.__doc__}{e}")
+            raise
+
+    def test_course_checkboxes1(self):
+        """
+        Name: Artiom
+        Function Name: test_course_checkboxes
+        Description: testing course checkboxes is working
+        """
+        try:
+            checkboxes = self.driver.find_elements(*self.locator.checkboxes_course1)
+            for i in range(len(checkboxes)):
+                checkboxes[i].click()
+                self.assertTrue(checkboxes[i].is_selected())
+                self.logger.info(
+                    f"{self.test_course_checkboxes1.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
+        except Exception as e:
+            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.logger.exception(f"{self.test_course_checkboxes1.__doc__}{e}")
+            raise
+
+    def test_gender_checkboxes(self):
+        """
+        Name: Artiom
+        Function Name: test_gender_checkboxes
+        Description: testing radios gender is working
+        """
+        try:
+            checkboxes = self.driver.find_elements(*self.locator.checkboxes_gender)
+            for i in range(len(checkboxes)):
+                checkboxes[i].click()
+                self.assertTrue(checkboxes[i].is_selected())
+                self.logger.info(
+                    f"{self.test_gender_checkboxes.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
+                x = input("Continue?:")
+        except Exception as e:
+            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.logger.exception(f"{self.test_gender_checkboxes.__doc__}{e}")
+            raise
+
+    def test_course_checkboxes2(self):
+        """
+        Name: Artiom
+        Function Name: test_course_checkboxes2
+        Description: testing course checkboxes is working
+        """
+        try:
+            checkboxes = self.driver.find_elements(*self.locator.checkboxes_course2)
+            for i in range(len(checkboxes)):
+                checkboxes[i].click()
+                self.assertTrue(checkboxes[i].is_selected())
+                self.logger.info(
+                    f"{self.test_course_checkboxes2.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
+        except Exception as e:
+            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{e}")
             raise
 
     def tearDown(self):
