@@ -31,3 +31,7 @@ class BasePage(object):
         """Returns the title of the page"""
         WebDriverWait(self.driver, 10).until(EC.title_is(title))
         return self.driver.title
+
+    def mass_enter_text(self, by_locators, text_data):
+        """Entering text to many inputs text by list of locators and insert text from data json """
+        pass

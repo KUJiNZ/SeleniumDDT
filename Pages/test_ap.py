@@ -21,10 +21,10 @@ class TestAP(unittest.TestCase, BasePage):
         self.driver = webdriver.Chrome()
         self.locator = PageLocators()
         # INIT JSON
-        self.util = Utilities('D:/PythonRepos/SeleniumDDTPython/Pages/DATA/DATA.json')
+        self.util = Utilities('DATA/DATA.json')
         self.expected = self.util.get_data()
         # INIT LOGGER
-        logger_file = "D:/PythonRepos/SeleniumDDTPython/Pages/Logs/" + 'test_ap_' + str(date.today()) + '.log'
+        logger_file = 'Logs/' + 'test_ap_' + str(date.today()) + '.log'
         log = Log("__example_test__ ", logger_file)
         self.logger = log.logger
         self.driver.get(os.getenv('URL'))
@@ -213,22 +213,43 @@ class TestAP(unittest.TestCase, BasePage):
     def test_clear(self):
         """
         Name: Artiom
-        Function Name: test_course_checkboxes2
-        Description: testing course checkboxes is working
+        Function Name: test_clear
+        Description: testing clearing input fields and radios and checkboxes cleared after clicking on Clear button
         """
         try:
+
+            radios_and_checkboxes = []
             input_fields = []
-            for e in self.locator.person_input_fields:
-                input_fields.append(self.driver.find_element(*e))
-            for e in input_fields:
-                x = e.get_attribute('value')
-                print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-                # self.assertTrue(checkboxes[i].is_selected())
-                # self.logger.info(
-                #     f"{self.test_course_checkboxes2.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
-        except Exception as e:
+            # Searching and filling inputs field from json data
+            for input_field in self.locator.person_input_fields:
+                input_fields.append(self.driver.find_element(*input_field))
+                self.enter_text(input_field, self.expected[input_field[1]])
+
+            # Searching radios and checkboxes and selecting them
+            for checkbox in self.locator.checkboxes_and_radios:
+                radios_and_checkboxes.append(self.driver.find_elements(*checkbox))
+            for ls in radios_and_checkboxes:
+                for item in ls:
+                    item.click()
+
+            # Clicking on button Clear
+            self.driver.find_element(*self.locator.clear_button).click()
+
+            # Checking if inputs cleared
+            for input_field in input_fields:
+                self.assertEqual(input_field.get_attribute('value'), '')
+                self.logger.info(
+                    f"{self.test_course_checkboxes2.__doc__}Result ->'{input_field.tag_name}' with type:'{input_field.get_attribute('type')}' and name:'{input_field.get_attribute('name')}'Actual: '{input_field.get_attribute('value')}', Expected: '{''}'\n")
+
+            # Checking if radios and checkboxes is unselected
+            for ls in radios_and_checkboxes:
+                for item in ls:
+                    self.assertFalse(item.is_selected())
+                    self.logger.info(
+                        f"{self.test_course_checkboxes2.__doc__}Result ->'{item.tag_name}' with type:'{item.get_attribute('type')}' and name:'{item.get_attribute('name')}'  Actual: '{item.is_selected()}', Expected: '{False}'\n")
+        except Exception as input_field:
             # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
-            self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{e}")
+            self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{input_field}")
             raise
 
     def tearDown(self):
