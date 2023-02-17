@@ -26,11 +26,10 @@ class CustomFormatter(logging.Formatter):
         return formatter.format(record)
 
 
-class Log:
+class Logger:
     def __init__(self, logger_name, file_name):
         self.logger_name = logger_name
         self.fmt = '%(asctime)s | %(name)s | %(levelname)s: %(message)s'
-        # Create stdout handler for logging to the console (logs all five levels)
         self.stdout_handler = logging.StreamHandler()
         self.stdout_handler.setLevel(logging.DEBUG)
         self.stdout_handler.setFormatter(CustomFormatter(self.fmt))

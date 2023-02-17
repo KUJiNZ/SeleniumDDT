@@ -1,3 +1,4 @@
+import datetime
 import os
 import unittest
 from datetime import date
@@ -6,8 +7,10 @@ from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
 
-from UTILITIES.log import Log
-from UTILITIES.utilities import Utilities
+from Utilities.screenshoter import Screenshoter
+from Utilities.logger import Logger
+from Utilities.datareader import Datareader
+
 from Pages.base_page import BasePage
 from Locators.locators import PageLocators
 
@@ -20,14 +23,19 @@ class TestAP(unittest.TestCase, BasePage):
         # BasePage.__init__(self, webdriver.Chrome())
         self.driver = webdriver.Chrome()
         self.locator = PageLocators()
-        # INIT JSON
-        self.util = Utilities('DATA/DATA.json')
+
+        # INIT Datareader of JSON
+        self.util = Datareader('DATA/DATA.json')
         self.expected = self.util.get_data()
+
         # INIT LOGGER
         logger_file = 'Logs/' + 'test_ap_' + str(date.today()) + '.log'
-        log = Log("__example_test__ ", logger_file)
+        log = Logger("__example_test__ ", logger_file)
         self.logger = log.logger
         self.driver.get(os.getenv('URL'))
+
+        # INIT SCREENSHOTER
+        self.screenshoter = Screenshoter(self.driver, 'D:/PythonProjects/SeleniumDDT/Pages/Screenshots')
 
     def test_name_input(self):
         """
@@ -38,9 +46,10 @@ class TestAP(unittest.TestCase, BasePage):
         try:
             self.enter_text(self.locator.fname, self.expected['fname'])
             x = self.driver.find_element(*self.locator.fname).get_attribute('value')
-            self.assertEqual(x, self.expected['fname'])  # add assertion here
+            self.assertEqual(x, self.expected['fname'])
             self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['fname']}\n")
         except Exception as e:
+            self.screenshoter.page_screenshot('test_name_input')
             self.logger.exception(f"{self.test_name_input.__doc__}{e}")
             raise
 
@@ -53,9 +62,10 @@ class TestAP(unittest.TestCase, BasePage):
         try:
             self.enter_text(self.locator.fname, self.expected['email'])
             x = self.driver.find_element(*self.locator.fname).get_attribute('value')
-            self.assertEqual(x, self.expected['email'])  # add assertion here
+            self.assertEqual(x, self.expected['email'])
             self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['email']}\n")
         except Exception as e:
+            self.screenshoter.page_screenshot('test_last_name_input')
             self.logger.exception(f"{self.test_name_input.__doc__}{e}")
             raise
 
@@ -68,10 +78,10 @@ class TestAP(unittest.TestCase, BasePage):
         try:
             self.enter_text(self.locator.fname, self.expected['email'])
             x = self.driver.find_element(*self.locator.fname).get_attribute('value')
-            self.assertEqual(x, self.expected['email'])  # add assertion here
+            self.assertEqual(x, self.expected['email'])
             self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['email']}\n")
         except Exception as e:
-            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.screenshoter.page_screenshot('test_email_input')
             self.logger.exception(f"{self.test_name_input.__doc__}{e}")
             raise
 
@@ -88,13 +98,15 @@ class TestAP(unittest.TestCase, BasePage):
             for k, v in self.expected["city"].items():
                 # Getting option by index
                 x.select_by_index(int(k))
+
                 # Getting text of selected option
                 y = x.first_selected_option.text
+
                 # Assert text of selected option and text in json
                 self.assertEqual(y, v)
                 self.logger.info(f"{self.test_name_input.__doc__}\nActual: {y}, Expected: {v}\n")
         except Exception as e:
-            # self.driver.save_screenshot("D:/PythonRepos/SeleniumDDTPython/Pages/Screenshotstest/test.png")
+            self.screenshoter.page_screenshot('test_city_combobox')
             self.logger.exception(f"{self.test_name_input.__doc__}{e}")
             raise
 
@@ -117,7 +129,7 @@ class TestAP(unittest.TestCase, BasePage):
                 self.assertEqual(y, v)
                 self.logger.info(f"{self.test_name_input.__doc__}\nActual: {y}, Expected: {v}\n")
         except Exception as e:
-            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.screenshoter.page_screenshot('test_mobile_combobox')
             self.logger.exception(f"{self.test_name_input.__doc__}{e}")
             raise
 
@@ -133,7 +145,7 @@ class TestAP(unittest.TestCase, BasePage):
             self.assertEqual(x, self.expected['phone'])
             self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['phone']}\n")
         except Exception as e:
-            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.screenshoter.page_screenshot('test_phone_input')
             self.logger.exception(f"{self.test_name_input.__doc__}{e}")
             raise
 
@@ -151,14 +163,14 @@ class TestAP(unittest.TestCase, BasePage):
                 self.logger.info(
                     f"{self.test_radios.__doc__}\nActual: {radios[i].is_selected()}, Expected: {True}\n")
         except Exception as e:
-            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.screenshoter.page_screenshot('test_radios')
             self.logger.exception(f"{self.test_radios.__doc__}{e}")
             raise
 
     def test_course_checkboxes1(self):
         """
         Name: Artiom
-        Function Name: test_course_checkboxes
+        Function Name: test_course_checkboxes1
         Description: testing course checkboxes is working
         """
         try:
@@ -169,7 +181,7 @@ class TestAP(unittest.TestCase, BasePage):
                 self.logger.info(
                     f"{self.test_course_checkboxes1.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
         except Exception as e:
-            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.screenshoter.page_screenshot('test_course_checkboxes1')
             self.logger.exception(f"{self.test_course_checkboxes1.__doc__}{e}")
             raise
 
@@ -186,9 +198,8 @@ class TestAP(unittest.TestCase, BasePage):
                 self.assertTrue(checkboxes[i].is_selected())
                 self.logger.info(
                     f"{self.test_gender_checkboxes.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
-                x = input("Continue?:")
         except Exception as e:
-            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.screenshoter.page_screenshot('test_gender_checkboxes')
             self.logger.exception(f"{self.test_gender_checkboxes.__doc__}{e}")
             raise
 
@@ -206,7 +217,7 @@ class TestAP(unittest.TestCase, BasePage):
                 self.logger.info(
                     f"{self.test_course_checkboxes2.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
         except Exception as e:
-            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.screenshoter.page_screenshot('test_course_checkboxes2')
             self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{e}")
             raise
 
@@ -248,9 +259,12 @@ class TestAP(unittest.TestCase, BasePage):
                     self.logger.info(
                         f"{self.test_course_checkboxes2.__doc__}Result ->'{item.tag_name}' with type:'{item.get_attribute('type')}' and name:'{item.get_attribute('name')}'  Actual: '{item.is_selected()}', Expected: '{False}'\n")
         except Exception as input_field:
-            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.screenshoter.page_screenshot('test_clear')
             self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{input_field}")
             raise
+
+    def test_send(self):
+        pass
 
     def tearDown(self):
         self.driver.quit()
