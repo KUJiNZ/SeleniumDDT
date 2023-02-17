@@ -210,6 +210,27 @@ class TestAP(unittest.TestCase, BasePage):
             self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{e}")
             raise
 
+    def test_clear(self):
+        """
+        Name: Artiom
+        Function Name: test_course_checkboxes2
+        Description: testing course checkboxes is working
+        """
+        try:
+            input_fields = []
+            for e in self.locator.person_input_fields:
+                input_fields.append(self.driver.find_element(*e))
+            for e in input_fields:
+                x = e.get_attribute('value')
+                print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+                # self.assertTrue(checkboxes[i].is_selected())
+                # self.logger.info(
+                #     f"{self.test_course_checkboxes2.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
+        except Exception as e:
+            # self.driver.save_screenshot("D:\\PythonScreenShots\\test.jpg")
+            self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{e}")
+            raise
+
     def tearDown(self):
         self.driver.quit()
 
