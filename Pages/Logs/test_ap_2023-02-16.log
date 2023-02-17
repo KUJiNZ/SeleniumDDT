@@ -1,0 +1,421 @@
+02/16/2023 09:07:06AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: John, Expected: John
+ 
+02/16/2023 09:08:09AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        'Smith' != 'John'
+- Smith
++ John
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 54, in test_last_name_input
+    self.assertEqual(x, self.expected['fname'])  # add assertion here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PyCharm Community Edition 2022.3.1\plugins\python-ce\helpers\pycharm\teamcity\diff_tools.py", line 33, in _patched_equals
+    old(self, first, second, msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 1253, in assertMultiLineEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 703, in fail
+    raise self.failureException(msg)
+AssertionError: 'Smith' != 'John'
+- Smith
++ John
+
+02/16/2023 09:08:23AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Smith, Expected: Smith
+ 
+02/16/2023 09:18:11AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: smith@gmail.com, Expected: smith@gmail.com
+ 
+02/16/2023 09:18:27AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        'emal' 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 70, in test_email_input
+    self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['emal']}\n")
+                                                                               ~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'emal'
+02/16/2023 09:18:39AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: smith@gmail.com, Expected: smith@gmail.com
+ 
+02/16/2023 10:10:19AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        Message: invalid argument: 'using' must be a string
+  (Session info: chrome=110.0.5481.100)
+Stacktrace:
+Backtrace:
+	(No symbol) [0x007B37D3]
+	(No symbol) [0x00748B81]
+	(No symbol) [0x0064B36D]
+	(No symbol) [0x0067D433]
+	(No symbol) [0x0067D4BB]
+	(No symbol) [0x006B3302]
+	(No symbol) [0x0069B464]
+	(No symbol) [0x006B1215]
+	(No symbol) [0x0069B216]
+	(No symbol) [0x00670D97]
+	(No symbol) [0x0067253D]
+	GetHandleVerifier [0x00A2ABF2+2510930]
+	GetHandleVerifier [0x00A58EC1+2700065]
+	GetHandleVerifier [0x00A5C86C+2714828]
+	GetHandleVerifier [0x00863480+645344]
+	(No symbol) [0x00750FD2]
+	(No symbol) [0x00756C68]
+	(No symbol) [0x00756D4B]
+	(No symbol) [0x00760D6B]
+	BaseThreadInitThunk [0x758A00F9+25]
+	RtlGetAppContainerNamedObjectPath [0x76F17BBE+286]
+	RtlGetAppContainerNamedObjectPath [0x76F17B8E+238]
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 84, in test_city_drop
+    dropdown = self.driver.find_element(self.locator.city)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PythonRepos\SeleniumDDTPython\venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 830, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PythonRepos\SeleniumDDTPython\venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 440, in execute
+    self.error_handler.check_response(response)
+  File "D:\PythonRepos\SeleniumDDTPython\venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 245, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidArgumentException: Message: invalid argument: 'using' must be a string
+  (Session info: chrome=110.0.5481.100)
+Stacktrace:
+Backtrace:
+	(No symbol) [0x007B37D3]
+	(No symbol) [0x00748B81]
+	(No symbol) [0x0064B36D]
+	(No symbol) [0x0067D433]
+	(No symbol) [0x0067D4BB]
+	(No symbol) [0x006B3302]
+	(No symbol) [0x0069B464]
+	(No symbol) [0x006B1215]
+	(No symbol) [0x0069B216]
+	(No symbol) [0x00670D97]
+	(No symbol) [0x0067253D]
+	GetHandleVerifier [0x00A2ABF2+2510930]
+	GetHandleVerifier [0x00A58EC1+2700065]
+	GetHandleVerifier [0x00A5C86C+2714828]
+	GetHandleVerifier [0x00863480+645344]
+	(No symbol) [0x00750FD2]
+	(No symbol) [0x00756C68]
+	(No symbol) [0x00756D4B]
+	(No symbol) [0x00760D6B]
+	BaseThreadInitThunk [0x758A00F9+25]
+	RtlGetAppContainerNamedObjectPath [0x76F17BBE+286]
+	RtlGetAppContainerNamedObjectPath [0x76F17B8E+238]
+
+02/16/2023 10:25:46AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        Message: Cannot locate option with value: Tel Aviv
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 86, in test_city_combobox
+    x = header.select_by_value(self.expected["city"][e])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PythonRepos\SeleniumDDTPython\venv\Lib\site-packages\selenium\webdriver\support\select.py", line 81, in select_by_value
+    raise NoSuchElementException(f"Cannot locate option with value: {value}")
+selenium.common.exceptions.NoSuchElementException: Message: Cannot locate option with value: Tel Aviv
+
+02/16/2023 10:27:08AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        Message: Cannot locate option with value: Tel Aviv
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 86, in test_city_combobox
+    x = header.select_by_value(self.expected["city"][e])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PythonRepos\SeleniumDDTPython\venv\Lib\site-packages\selenium\webdriver\support\select.py", line 81, in select_by_value
+    raise NoSuchElementException(f"Cannot locate option with value: {value}")
+selenium.common.exceptions.NoSuchElementException: Message: Cannot locate option with value: Tel Aviv
+
+02/16/2023 10:38:09AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        Message: Cannot locate option with value: Tel Aviv
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 86, in test_city_combobox
+    x = header.select_by_value(self.expected["city"][i])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PythonRepos\SeleniumDDTPython\venv\Lib\site-packages\selenium\webdriver\support\select.py", line 81, in select_by_value
+    raise NoSuchElementException(f"Cannot locate option with value: {value}")
+selenium.common.exceptions.NoSuchElementException: Message: Cannot locate option with value: Tel Aviv
+
+02/16/2023 10:39:13AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        None != 'Tel Aviv' 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 87, in test_city_combobox
+    self.assertEqual(x, self.expected["city"][i])
+  File "D:\PyCharm Community Edition 2022.3.1\plugins\python-ce\helpers\pycharm\teamcity\diff_tools.py", line 33, in _patched_equals
+    old(self, first, second, msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 866, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: None != 'Tel Aviv'
+02/16/2023 10:45:38AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Tel Aviv, Expected: Tel Aviv
+ 
+02/16/2023 10:45:38AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Jerusalem, Expected: Jerusalem
+ 
+02/16/2023 10:45:38AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Hiffa, Expected: Hiffa
+ 
+02/16/2023 11:15:24AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        not enough values to unpack (expected 2, got 1) 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 85, in test_city_combobox
+    for k,v in self.expected["city"]:
+        ^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+02/16/2023 11:16:54AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        1 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 87, in test_city_combobox
+    x.select_by_index(self.expected["city"][int(k)])
+                      ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+KeyError: 1
+02/16/2023 11:19:50AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        invalid literal for int() with base 10: 'Tel Aviv' 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 86, in test_city_combobox
+    x.select_by_index(int(self.expected["city"][k]))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'Tel Aviv'
+02/16/2023 11:20:18AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        'Tel Aviv' 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 88, in test_city_combobox
+    self.assertEqual(y, self.expected["city"][v])
+                        ~~~~~~~~~~~~~~~~~~~~~^^^
+KeyError: 'Tel Aviv'
+02/16/2023 11:21:09AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        'Tel Aviv' 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 88, in test_city_combobox
+    self.assertEqual(y, self.expected["city"][v])
+                        ~~~~~~~~~~~~~~~~~~~~~^^^
+KeyError: 'Tel Aviv'
+02/16/2023 11:21:46AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        name 'i' is not defined 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 89, in test_city_combobox
+    self.logger.info(f"{self.test_name_input.__doc__}\nActual: {y}, Expected: {self.expected['city'][i]}\n")
+                                                                                                     ^
+NameError: name 'i' is not defined
+02/16/2023 11:22:12AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Tel Aviv, Expected: Tel Aviv
+ 
+02/16/2023 11:22:12AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Jerusalem, Expected: Jerusalem
+ 
+02/16/2023 11:22:13AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Hiffa, Expected: Hiffa
+ 
+02/16/2023 11:22:13AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Beer Sheva, Expected: Beer Sheva
+ 
+02/16/2023 11:22:26AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Tel Aviv, Expected: Tel Aviv
+ 
+02/16/2023 11:22:26AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Jerusalem, Expected: Jerusalem
+ 
+02/16/2023 11:22:27AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Hiffa, Expected: Hiffa
+ 
+02/16/2023 11:22:27AM __example_test__ INFO: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        
+Actual: Beer Sheva, Expected: Beer Sheva
+ 
+02/16/2023 11:24:00AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        'Tel Aviv' != '0'
+- Tel Aviv
++ 0
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 88, in test_city_combobox
+    self.assertEqual(y, k)
+  File "D:\PyCharm Community Edition 2022.3.1\plugins\python-ce\helpers\pycharm\teamcity\diff_tools.py", line 33, in _patched_equals
+    old(self, first, second, msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 1253, in assertMultiLineEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 703, in fail
+    raise self.failureException(msg)
+AssertionError: 'Tel Aviv' != '0'
+- Tel Aviv
++ 0
+
+02/16/2023 11:24:36AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        'Tel Aviv' != '0'
+- Tel Aviv
++ 0
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 88, in test_city_combobox
+    self.assertEqual(y, k)
+  File "D:\PyCharm Community Edition 2022.3.1\plugins\python-ce\helpers\pycharm\teamcity\diff_tools.py", line 33, in _patched_equals
+    old(self, first, second, msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 1253, in assertMultiLineEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 703, in fail
+    raise self.failureException(msg)
+AssertionError: 'Tel Aviv' != '0'
+- Tel Aviv
++ 0
+
+02/16/2023 11:36:42AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        '050' != '50'
+- 050
+? -
++ 50
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 116, in test_mobile_combobox
+    self.assertEqual(y, v)
+  File "D:\PyCharm Community Edition 2022.3.1\plugins\python-ce\helpers\pycharm\teamcity\diff_tools.py", line 33, in _patched_equals
+    old(self, first, second, msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 1253, in assertMultiLineEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 703, in fail
+    raise self.failureException(msg)
+AssertionError: '050' != '50'
+- 050
+? -
++ 50
+
+02/16/2023 11:37:36AM __example_test__ ERROR: 
+        Name: Artiom
+        Function Name: test_name_input
+        Description: testing input first name field
+        '050' != '50'
+- 050
+? -
++ 50
+ 
+Traceback (most recent call last):
+  File "D:\PythonRepos\SeleniumDDTPython\Pages\test_ap.py", line 116, in test_mobile_combobox
+    self.assertEqual(y, v)
+  File "D:\PyCharm Community Edition 2022.3.1\plugins\python-ce\helpers\pycharm\teamcity\diff_tools.py", line 33, in _patched_equals
+    old(self, first, second, msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 1253, in assertMultiLineEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+  File "C:\Users\deade\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py", line 703, in fail
+    raise self.failureException(msg)
+AssertionError: '050' != '50'
+- 050
+? -
++ 50
+

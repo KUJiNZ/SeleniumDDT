@@ -6,5 +6,10 @@ class Utilities(object):
     def __init__(self, filepath):
         self.filepath = filepath
 
-    def getJsonData(self):
-        return json.load(open(self.filepath))
+    def get_data(self):
+        with open(self.filepath,'r') as f:
+            data = json.load(f)
+        return data
+
+
+

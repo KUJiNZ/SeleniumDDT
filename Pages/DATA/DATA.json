@@ -1,6 +1,20 @@
 {
-	{
-        "fname": "Jhon",
-        "lname": "Smith"
-    }
+    "fname": "John",
+    "lname" : "Smith",
+    "email": "smith@gmail.com",
+    "city":
+    {
+        "0":"Tel Aviv",
+        "1": "Jerusalem",
+        "2": "Hiffa",
+        "3":"Beer Sheva"
+    },
+    "mobile":
+    {
+        "0":"050",
+        "1":"052",
+        "2":"053",
+        "3":"054"
+    },
+    "phone": "123-45-678"
 }
