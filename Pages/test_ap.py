@@ -1,11 +1,14 @@
-import datetime
 import os
 import unittest
 from datetime import date
 from dotenv import load_dotenv
 
 from selenium import webdriver
+from selenium.webdriver import Keys
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.common.exceptions import TimeoutException
 
 from Utilities.screenshoter import Screenshoter
 from Utilities.logger import Logger
@@ -37,6 +40,7 @@ class TestAP(unittest.TestCase, BasePage):
         # INIT SCREENSHOTER
         self.screenshoter = Screenshoter(self.driver, 'D:/PythonProjects/SeleniumDDT/Pages/Screenshots')
 
+    # PERSON INFO AREA
     def test_name_input(self):
         """
         Name: Artiom
@@ -258,13 +262,63 @@ class TestAP(unittest.TestCase, BasePage):
                     self.assertFalse(item.is_selected())
                     self.logger.info(
                         f"{self.test_course_checkboxes2.__doc__}Result ->'{item.tag_name}' with type:'{item.get_attribute('type')}' and name:'{item.get_attribute('name')}'  Actual: '{item.is_selected()}', Expected: '{False}'\n")
-        except Exception as input_field:
+        except Exception as e:
             self.screenshoter.page_screenshot('test_clear')
-            self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{input_field}")
+            self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{e}")
             raise
 
     def test_send(self):
-        pass
+        """
+        Name: Artiom
+        Function Name: test_send
+        Description: testing button Send that connected to input fields in person info area
+        """
+        try:
+            # Searching all inputs must be field that connected to Send button
+            for input_field in self.locator.person_input_fields:
+                x = self.driver.find_element(*input_field)
+                # Input is empty that means pushing Send button must be validation message on the input
+                self.driver.find_element(*self.locator.send_button).click()
+                # Getting validation message,if he wasn't popped by default he is ''
+                valid_msg = x.get_attribute("validationMessage")
+                # If validation message is empty he wasn't popped that is fail cause input must be filled
+                self.assertTrue(valid_msg != '')
+                # Filling the field to check next field
+                self.enter_text(input_field, self.expected[input_field[1]])
+                self.logger.info(
+                    f"{self.test_send.__doc__}Result ->'{x.tag_name}' with type:'{x.get_attribute('type')}' and name:'{x.get_attribute('name')}'Actual: '{x.get_attribute('value')}', Expected: 'Validation message'\n")
+        except Exception as e:
+            self.screenshoter.page_screenshot('test_clear')
+            self.logger.exception(f"{self.test_send.__doc__}{e}")
+            raise
+
+    # JS Buttons area
+    def test_set_text(self):
+        """
+        Name: Artiom
+        Function Name: test_set_text
+        Description: testing js button Set Text,button calling to
+        prompt alert where need to set text and check the text in fieldset
+        """
+        try:
+            # Finding button Set Text
+            self.driver.find_element(*self.locator.JSB_button).click()
+            # Switching to prompt alert
+            alert = self.driver.switch_to.alert
+            # Inserting text to prompt alert
+            alert.send_keys(self.expected['jsb_fieldset'])
+            # Submit prompt alert
+            alert.accept()
+            # Finding fieldset where text inserted from prompt alert
+            x = self.driver.find_element(*self.locator.JSB_fieldset)
+            # Asserting text in fieldset and data json
+            self.assertEqual(x.text, self.expected['jsb_fieldset'])
+            self.logger.info(
+                f"{self.test_set_text.__doc__}Result ->'{x.tag_name}' with id:'{x.get_attribute('id')}' Actual: '{x.text}', Expected: '{self.expected['jsb_fieldset']}'\n")
+        except Exception as e:
+            self.screenshoter.page_screenshot('test_clear')
+            self.logger.exception(f"{self.test_set_text.__doc__}{e}")
+            raise
 
     def tearDown(self):
         self.driver.quit()

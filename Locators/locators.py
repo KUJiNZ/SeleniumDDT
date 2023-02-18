@@ -16,3 +16,8 @@ class PageLocators(object):
     clear_button = (By.ID, 'CB')
     person_input_fields = [tuple(fname), tuple(lname), tuple(email), tuple(phone)]
     checkboxes_and_radios = [radios_gender, checkboxes_course1, checkboxes_gender, checkboxes_course2]
+    send_button = (By.ID, 'send')
+
+    # JS Buttons area
+    JSB_fieldset = (By.ID, 'pbyuser')
+    JSB_button = (By.CSS_SELECTOR, 'body > fieldset:nth-child(4) > button:nth-child(5)')
