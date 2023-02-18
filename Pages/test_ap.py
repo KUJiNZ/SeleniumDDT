@@ -180,13 +180,12 @@ class TestAP(unittest.TestCase, BasePage):
         Description: testing input phone field
         """
         try:
-            phone_regex = '\d\S{7}'
+            phone_regex = '\d\S{7}$'
             # Passing through all data json phones
             for i in range(len(self.expected['phones']) - 1):
 
                 # Positive test
-                if re.search(phone_regex, self.expected['phones'][i]) and len(
-                        self.expected['phones'][i]) == int(os.getenv('PHONE_NUMBER_LENGTH')):
+                if re.search(phone_regex, self.expected['phones'][i]) :
                     # Inserting text to check
                     self.enter_text(self.locator.fname, self.expected['phones'][i])
                     # Finding input element
