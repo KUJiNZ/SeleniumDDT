@@ -53,7 +53,7 @@ class TestAP(unittest.TestCase, BasePage):
             for i in range(len(self.expected['fname']) - 1):
 
                 # Positive test
-                if re.search(fname_regex, self.expected['fnames'][i]):
+                if re.match(fname_regex, self.expected['fnames'][i]):
                     # Inserting text to check
                     self.enter_text(self.locator.fname, self.expected['fnames'][i])
                     # Finding input element
@@ -97,7 +97,7 @@ class TestAP(unittest.TestCase, BasePage):
             for i in range(len(self.expected['lnames']) - 1):
 
                 # Positive test
-                if re.search(fname_regex, self.expected['lnames'][i]):
+                if re.match(fname_regex, self.expected['lnames'][i]):
                     # Inserting text to check
                     self.enter_text(self.locator.lname, self.expected['lnames'][i])
                     # Finding input element
@@ -142,7 +142,7 @@ class TestAP(unittest.TestCase, BasePage):
             for i in range(len(self.expected['emails']) - 1):
 
                 # Positive test
-                if re.search(email_regex, self.expected['emails'][i]):
+                if re.match(email_regex, self.expected['emails'][i]):
                     # Inserting text to check
                     self.enter_text(self.locator.fname, self.expected['emails'][i])
                     # Finding input element
@@ -180,12 +180,13 @@ class TestAP(unittest.TestCase, BasePage):
         Description: testing input phone field
         """
         try:
+            # Only digits without whitespace and in len of 8 digits exactly
             phone_regex = '\d\S{7}$'
             # Passing through all data json phones
             for i in range(len(self.expected['phones']) - 1):
 
                 # Positive test
-                if re.search(phone_regex, self.expected['phones'][i]) :
+                if re.match(phone_regex, self.expected['phones'][i]):
                     # Inserting text to check
                     self.enter_text(self.locator.fname, self.expected['phones'][i])
                     # Finding input element
@@ -194,7 +195,7 @@ class TestAP(unittest.TestCase, BasePage):
                     value = x.get_attribute('value')
                     # Asserting if text in element is the same in json
                     self.assertEqual(value, self.expected['phones'][i])
-                    self.logger.info(self.log.message_build(self.test_email_input.__doc__, x,
+                    self.logger.info(self.log.message_build(self.test_phone_input.__doc__, x,
                                                             value, self.expected['phones'][i]))
                     x.clear()
 
@@ -212,8 +213,8 @@ class TestAP(unittest.TestCase, BasePage):
                                                             value, Exception))
                     x.clear()
         except Exception as e:
-            self.screenshoter.page_screenshot('test_email_input')
-            self.logger.exception(f"{self.test_email_input.__doc__}{e}")
+            self.screenshoter.page_screenshot('test_phone_input')
+            self.logger.exception(f"{self.test_phone_input.__doc__}{e}")
             raise
 
     def test_city_combobox(self):
