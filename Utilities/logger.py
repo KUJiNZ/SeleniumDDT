@@ -28,8 +28,9 @@ class CustomFormatter(logging.Formatter):
 
 class Logger:
     def __init__(self, logger_name, file_name):
+        self.message = ''
         self.logger_name = logger_name
-        self.fmt = '%(asctime)s | %(name)s | %(levelname)s: %(message)s'
+        self.fmt = '--------%(asctime)s | %(name)s | %(levelname)s: %(message)s'
         self.stdout_handler = logging.StreamHandler()
         self.stdout_handler.setLevel(logging.DEBUG)
         self.stdout_handler.setFormatter(CustomFormatter(self.fmt))
@@ -40,3 +41,29 @@ class Logger:
         self.file_handler.setFormatter(logging.Formatter(self.fmt, datefmt='%m/%d/%Y %I:%M:%S%p'))
         self.logger.addHandler(self.file_handler)
         self.logger.addHandler(self.stdout_handler)
+
+    def message_build(self, docstring, element, actual, expected,exception = ''):
+        self.message = docstring + 'Result => Element '
+
+        if type(element) is not str:
+            if element.tag_name is not None:
+                self.message += f" '{element.tag_name}' -> "
+
+            if element.get_attribute('id') is not None:
+                self.message += " 'id':" + element.get_attribute('id')
+
+            if element.get_attribute('type') is not None:
+                self.message += " 'type': " + element.get_attribute('type')
+
+            if element.get_attribute('name') is not None:
+                self.message += " 'name': " + element.get_attribute('name')
+
+            if element.get_attribute('size') is not None:
+                self.message += " 'size': " + element.get_attribute('size')
+
+        else:
+            self.message += element
+
+        self.message += f"\n\t\tActual: {str(actual)} , Expected: {str(expected)} {exception}"
+
+        return self.message

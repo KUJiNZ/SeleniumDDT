@@ -26,6 +26,8 @@ class TestAP(unittest.TestCase, BasePage):
         # BasePage.__init__(self, webdriver.Chrome())
         self.driver = webdriver.Chrome()
         self.locator = PageLocators()
+        # WAIT
+        self.wait = WebDriverWait(self.driver, 10)
 
         # INIT Datareader of JSON
         self.util = Datareader('DATA/DATA.json')
@@ -33,28 +35,34 @@ class TestAP(unittest.TestCase, BasePage):
 
         # INIT LOGGER
         logger_file = 'Logs/' + 'test_ap_' + str(date.today()) + '.log'
-        log = Logger("__example_test__ ", logger_file)
-        self.logger = log.logger
+        self.log = Logger("test_ap_logger ", logger_file)
+        self.logger = self.log.logger
         self.driver.get(os.getenv('URL'))
 
         # INIT SCREENSHOTER
         self.screenshoter = Screenshoter(self.driver, 'D:/PythonProjects/SeleniumDDT/Pages/Screenshots')
 
     # PERSON INFO AREA
-    def test_name_input(self):
+    def test_fname_input(self):
         """
         Name: Artiom
         Function Name: test_name_input
         Description: testing input first name field
         """
         try:
+            # Inserting text to check
             self.enter_text(self.locator.fname, self.expected['fname'])
-            x = self.driver.find_element(*self.locator.fname).get_attribute('value')
-            self.assertEqual(x, self.expected['fname'])
-            self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['fname']}\n")
+            # Finding input element
+            x = self.driver.find_element(*self.locator.fname)
+            # Getting inserted text from input
+            value = x.get_attribute('value')
+            # Asserting if text in element is the same in json
+            self.assertEqual(value, self.expected['fname'])
+            self.logger.info(self.log.message_build(self.test_last_name_input.__doc__, x,
+                                                    value, self.expected['fname']))
         except Exception as e:
             self.screenshoter.page_screenshot('test_name_input')
-            self.logger.exception(f"{self.test_name_input.__doc__}{e}")
+            self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
     def test_last_name_input(self):
@@ -64,13 +72,19 @@ class TestAP(unittest.TestCase, BasePage):
         Description: testing input last name field
         """
         try:
-            self.enter_text(self.locator.fname, self.expected['email'])
-            x = self.driver.find_element(*self.locator.fname).get_attribute('value')
-            self.assertEqual(x, self.expected['email'])
-            self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['email']}\n")
+            # Inserting text to check
+            self.enter_text(self.locator.fname, self.expected['lname'])
+            # Finding input element
+            x = self.driver.find_element(*self.locator.fname)
+            # Getting inserted text from input
+            value = x.get_attribute('value')
+            # Asserting if text in element is the same in json
+            self.assertEqual(value, self.expected['lname'])
+            self.logger.info(self.log.message_build(self.test_last_name_input.__doc__, x,
+                                                    value, self.expected['lname']))
         except Exception as e:
             self.screenshoter.page_screenshot('test_last_name_input')
-            self.logger.exception(f"{self.test_name_input.__doc__}{e}")
+            self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
     def test_email_input(self):
@@ -80,13 +94,19 @@ class TestAP(unittest.TestCase, BasePage):
         Description: testing input email field
         """
         try:
+            # Inserting text to check
             self.enter_text(self.locator.fname, self.expected['email'])
-            x = self.driver.find_element(*self.locator.fname).get_attribute('value')
-            self.assertEqual(x, self.expected['email'])
-            self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['email']}\n")
+            # Finding input element
+            x = self.driver.find_element(*self.locator.fname)
+            # Getting inserted text from input
+            value = x.get_attribute('value')
+            # Asserting if text in element is the same in json
+            self.assertEqual(value, self.expected['email'])
+            self.logger.info(self.log.message_build(self.test_email_input.__doc__, x,
+                                                    value, self.expected['email']))
         except Exception as e:
             self.screenshoter.page_screenshot('test_email_input')
-            self.logger.exception(f"{self.test_name_input.__doc__}{e}")
+            self.logger.exception(f"{self.test_email_input.__doc__}{e}")
             raise
 
     def test_city_combobox(self):
@@ -97,21 +117,20 @@ class TestAP(unittest.TestCase, BasePage):
         """
         try:
             # Finding node of select combobox
-            x = Select(self.driver.find_element(*self.locator.city))
+            x = self.driver.find_element(*self.locator.city)
+            select = Select(x)
             # Getting data from json that must be in combobox k is index v is text in option
             for k, v in self.expected["city"].items():
                 # Getting option by index
-                x.select_by_index(int(k))
-
+                select.select_by_index(int(k))
                 # Getting text of selected option
-                y = x.first_selected_option.text
-
+                y = select.first_selected_option.text
                 # Assert text of selected option and text in json
                 self.assertEqual(y, v)
-                self.logger.info(f"{self.test_name_input.__doc__}\nActual: {y}, Expected: {v}\n")
+                self.logger.info(self.log.message_build(self.test_fname_input.__doc__, x, y, v))
         except Exception as e:
             self.screenshoter.page_screenshot('test_city_combobox')
-            self.logger.exception(f"{self.test_name_input.__doc__}{e}")
+            self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
     def test_mobile_combobox(self):
@@ -122,19 +141,20 @@ class TestAP(unittest.TestCase, BasePage):
         """
         try:
             # Finding node of select combobox
-            x = Select(self.driver.find_element(*self.locator.mobile))
+            x = self.driver.find_element(*self.locator.mobile)
+            select = Select(x)
             # Getting data from json that must be in combobox k is index v is text in option
             for k, v in self.expected["mobile"].items():
                 # Getting option by index
-                x.select_by_index(int(k))
+                select.select_by_index(int(k))
                 # Getting text of selected option
-                y = x.first_selected_option.text
+                y = select.first_selected_option.text
                 # Assert text of selected option and text in json
                 self.assertEqual(y, v)
-                self.logger.info(f"{self.test_name_input.__doc__}\nActual: {y}, Expected: {v}\n")
+                self.logger.info(self.log.message_build(self.test_fname_input.__doc__, x, y, v))
         except Exception as e:
             self.screenshoter.page_screenshot('test_mobile_combobox')
-            self.logger.exception(f"{self.test_name_input.__doc__}{e}")
+            self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
     def test_phone_input(self):
@@ -145,12 +165,13 @@ class TestAP(unittest.TestCase, BasePage):
         """
         try:
             self.enter_text(self.locator.phone, self.expected['phone'])
-            x = self.driver.find_element(*self.locator.phone).get_attribute('value')
+            element = self.driver.find_element(*self.locator.phone)
+            x = element.get_attribute('value')
             self.assertEqual(x, self.expected['phone'])
-            self.logger.info(f"{self.test_name_input.__doc__}\nActual: {x}, Expected: {self.expected['phone']}\n")
+            self.logger.info(self.log.message_build(self.test_fname_input.__doc__, element, x, self.expected['phone']))
         except Exception as e:
             self.screenshoter.page_screenshot('test_phone_input')
-            self.logger.exception(f"{self.test_name_input.__doc__}{e}")
+            self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
     def test_radios(self):
@@ -164,8 +185,7 @@ class TestAP(unittest.TestCase, BasePage):
             for i in range(len(radios)):
                 radios[i].click()
                 self.assertTrue(radios[i].is_selected())
-                self.logger.info(
-                    f"{self.test_radios.__doc__}\nActual: {radios[i].is_selected()}, Expected: {True}\n")
+                self.logger.info(self.log.message_build(self.test_radios.__doc__, radios[i], radios[i].is_selected(), True))
         except Exception as e:
             self.screenshoter.page_screenshot('test_radios')
             self.logger.exception(f"{self.test_radios.__doc__}{e}")
@@ -182,8 +202,8 @@ class TestAP(unittest.TestCase, BasePage):
             for i in range(len(checkboxes)):
                 checkboxes[i].click()
                 self.assertTrue(checkboxes[i].is_selected())
-                self.logger.info(
-                    f"{self.test_course_checkboxes1.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
+                self.logger.info(self.log.message_build(self.test_course_checkboxes1.__doc__, checkboxes[i],
+                                                        checkboxes[i].is_selected(), True))
         except Exception as e:
             self.screenshoter.page_screenshot('test_course_checkboxes1')
             self.logger.exception(f"{self.test_course_checkboxes1.__doc__}{e}")
@@ -200,8 +220,8 @@ class TestAP(unittest.TestCase, BasePage):
             for i in range(len(checkboxes)):
                 checkboxes[i].click()
                 self.assertTrue(checkboxes[i].is_selected())
-                self.logger.info(
-                    f"{self.test_gender_checkboxes.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
+                self.logger.info(self.log.message_build(self.test_gender_checkboxes.__doc__, checkboxes[i],
+                                                        checkboxes[i].is_selected(), True))
         except Exception as e:
             self.screenshoter.page_screenshot('test_gender_checkboxes')
             self.logger.exception(f"{self.test_gender_checkboxes.__doc__}{e}")
@@ -218,8 +238,8 @@ class TestAP(unittest.TestCase, BasePage):
             for i in range(len(checkboxes)):
                 checkboxes[i].click()
                 self.assertTrue(checkboxes[i].is_selected())
-                self.logger.info(
-                    f"{self.test_course_checkboxes2.__doc__}\nActual: {checkboxes[i].is_selected()}, Expected: {True}\n")
+                self.logger.info(self.log.message_build(self.test_course_checkboxes2.__doc__, checkboxes[i],
+                                                        checkboxes[i].is_selected(), True))
         except Exception as e:
             self.screenshoter.page_screenshot('test_course_checkboxes2')
             self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{e}")
@@ -253,15 +273,15 @@ class TestAP(unittest.TestCase, BasePage):
             # Checking if inputs cleared
             for input_field in input_fields:
                 self.assertEqual(input_field.get_attribute('value'), '')
-                self.logger.info(
-                    f"{self.test_course_checkboxes2.__doc__}Result ->'{input_field.tag_name}' with type:'{input_field.get_attribute('type')}' and name:'{input_field.get_attribute('name')}'Actual: '{input_field.get_attribute('value')}', Expected: '{''}'\n")
+                self.logger.info(self.log.message_build(self.test_clear.__doc__, input_field,
+                                                        input_field.get_attribute('value'), ''))
 
             # Checking if radios and checkboxes is unselected
             for ls in radios_and_checkboxes:
                 for item in ls:
                     self.assertFalse(item.is_selected())
-                    self.logger.info(
-                        f"{self.test_course_checkboxes2.__doc__}Result ->'{item.tag_name}' with type:'{item.get_attribute('type')}' and name:'{item.get_attribute('name')}'  Actual: '{item.is_selected()}', Expected: '{False}'\n")
+                    self.logger.info(self.log.message_build(self.test_clear.__doc__, item,
+                                                            item.get_attribute('name'), False))
         except Exception as e:
             self.screenshoter.page_screenshot('test_clear')
             self.logger.exception(f"{self.test_course_checkboxes2.__doc__}{e}")
@@ -285,8 +305,8 @@ class TestAP(unittest.TestCase, BasePage):
                 self.assertTrue(valid_msg != '')
                 # Filling the field to check next field
                 self.enter_text(input_field, self.expected[input_field[1]])
-                self.logger.info(
-                    f"{self.test_send.__doc__}Result ->'{x.tag_name}' with type:'{x.get_attribute('type')}' and name:'{x.get_attribute('name')}'Actual: '{x.get_attribute('value')}', Expected: 'Validation message'\n")
+                self.logger.info(self.log.message_build(self.test_send.__doc__, x,
+                                                        x.get_attribute('value'), 'Validation message'))
         except Exception as e:
             self.screenshoter.page_screenshot('test_clear')
             self.logger.exception(f"{self.test_send.__doc__}{e}")
@@ -302,7 +322,7 @@ class TestAP(unittest.TestCase, BasePage):
         """
         try:
             # Finding button Set Text
-            self.driver.find_element(*self.locator.JSB_button).click()
+            self.driver.find_element(*self.locator.JSB_settext).click()
             # Switching to prompt alert
             alert = self.driver.switch_to.alert
             # Inserting text to prompt alert
@@ -313,10 +333,34 @@ class TestAP(unittest.TestCase, BasePage):
             x = self.driver.find_element(*self.locator.JSB_fieldset)
             # Asserting text in fieldset and data json
             self.assertEqual(x.text, self.expected['jsb_fieldset'])
-            self.logger.info(
-                f"{self.test_set_text.__doc__}Result ->'{x.tag_name}' with id:'{x.get_attribute('id')}' Actual: '{x.text}', Expected: '{self.expected['jsb_fieldset']}'\n")
+            self.logger.info(self.log.message_build(self.test_send.__doc__, x,
+                                                    x.text, self.expected['jsb_fieldset']))
         except Exception as e:
             self.screenshoter.page_screenshot('test_clear')
+            self.logger.exception(f"{self.test_set_text.__doc__}{e}")
+            raise
+
+    def test_start_loading(self):
+        """
+        Name: Artiom
+        Function Name: test_start_loading
+        Description: testing js button Start loadin,button have to switch text
+        """
+        try:
+            # Finding text
+            x = self.driver.find_element(*self.locator.JS_text)
+            self.assertTrue(x.text, self.expected['jsb_text'][0])
+            self.logger.info(self.log.message_build(self.test_start_loading.__doc__, x,
+                                                    x.text, self.expected['jsb_text'][0]))
+            # Finding button Start Loading and click on him
+            self.driver.find_element(*self.locator.JSB_startloading).click()
+            # Asserting if text is switched
+            self.assertTrue(
+                self.wait.until(ec.text_to_be_present_in_element(self.locator.JS_text, self.expected['jsb_text'][1])))
+            self.logger.info(self.log.message_build(self.test_start_loading.__doc__, x,
+                                                    x.text, self.expected['jsb_text'][1]))
+        except Exception as e:
+            self.screenshoter.page_screenshot('test_start_loading')
             self.logger.exception(f"{self.test_set_text.__doc__}{e}")
             raise
 

@@ -20,4 +20,6 @@ class PageLocators(object):
 
     # JS Buttons area
     JSB_fieldset = (By.ID, 'pbyuser')
-    JSB_button = (By.CSS_SELECTOR, 'body > fieldset:nth-child(4) > button:nth-child(5)')
+    JSB_settext = (By.CSS_SELECTOR, 'body > fieldset:nth-child(4) > button:nth-child(5)')
+    JS_text = (By.ID, 'startLoad')
+    JSB_startloading = (By.CSS_SELECTOR, 'body > fieldset:nth-child(4) > button:nth-child(9)')

@@ -17,5 +17,6 @@
         "3":"054"
     },
     "phone": "123-45-678",
-    "jsb_fieldset": "Some text"
+    "jsb_fieldset": "Some text",
+    "jsb_text": ["Click on Start Loading","Finish"]
 }
