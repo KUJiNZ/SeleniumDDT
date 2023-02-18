@@ -1,14 +1,13 @@
 import os
+import re
 import unittest
 from datetime import date
 from dotenv import load_dotenv
 
 from selenium import webdriver
-from selenium.webdriver import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-from selenium.common.exceptions import TimeoutException
 
 from Utilities.screenshoter import Screenshoter
 from Utilities.logger import Logger
@@ -50,18 +49,40 @@ class TestAP(unittest.TestCase, BasePage):
         Description: testing input first name field
         """
         try:
-            # Inserting text to check
-            self.enter_text(self.locator.fname, self.expected['fname'])
-            # Finding input element
-            x = self.driver.find_element(*self.locator.fname)
-            # Getting inserted text from input
-            value = x.get_attribute('value')
-            # Asserting if text in element is the same in json
-            self.assertEqual(value, self.expected['fname'])
-            self.logger.info(self.log.message_build(self.test_last_name_input.__doc__, x,
-                                                    value, self.expected['fname']))
+            fname_regex = '^[A-Z]\D\S[a-z]{1,40}'
+            for i in range(len(self.expected['fname']) - 1):
+
+                # Positive test
+                if re.search(fname_regex, self.expected['fnames'][i]):
+                    # Inserting text to check
+                    self.enter_text(self.locator.fname, self.expected['fnames'][i])
+                    # Finding input element
+                    x = self.driver.find_element(*self.locator.fname)
+                    # Getting inserted text from input
+                    value = x.get_attribute('value')
+                    # Asserting if text in element is the same in json
+                    self.assertEqual(value, self.expected['fnames'][i])
+                    self.logger.info(self.log.message_build(self.test_fname_input.__doc__, x,
+                                                            value, self.expected['fnames'][i]))
+                    x.clear()
+
+                # Negative test
+                else:
+                    # Inserting text to check
+                    self.enter_text(self.locator.fname, self.expected['fnames'][i])
+                    # Finding input element
+                    y = self.expected['fnames'][i]
+                    x = self.driver.find_element(*self.locator.fname)
+                    # Getting inserted text from input
+                    value = x.get_attribute('validationMessage')
+                    # Asserting valid massage that must be in input field cause text input is not valid
+                    # If message isn't popped that means bug
+                    self.assertNotEqual(value, '')
+                    self.logger.info(self.log.message_build(self.test_fname_input.__doc__, x,
+                                                            value, self.expected['fnames'][i]))
+                    x.clear()
         except Exception as e:
-            self.screenshoter.page_screenshot('test_name_input')
+            self.screenshoter.page_screenshot('test_last_name_input')
             self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
@@ -72,16 +93,38 @@ class TestAP(unittest.TestCase, BasePage):
         Description: testing input last name field
         """
         try:
-            # Inserting text to check
-            self.enter_text(self.locator.fname, self.expected['lname'])
-            # Finding input element
-            x = self.driver.find_element(*self.locator.fname)
-            # Getting inserted text from input
-            value = x.get_attribute('value')
-            # Asserting if text in element is the same in json
-            self.assertEqual(value, self.expected['lname'])
-            self.logger.info(self.log.message_build(self.test_last_name_input.__doc__, x,
-                                                    value, self.expected['lname']))
+            fname_regex = '^[A-Z]\D\S[a-z]{1,3}'
+            for i in range(len(self.expected['lnames']) - 1):
+
+                # Positive test
+                if re.search(fname_regex, self.expected['lnames'][i]):
+                    # Inserting text to check
+                    self.enter_text(self.locator.lname, self.expected['lnames'][i])
+                    # Finding input element
+                    x = self.driver.find_element(*self.locator.lname)
+                    # Getting inserted text from input
+                    value = x.get_attribute('value')
+                    # Asserting if text in element is the same in json
+                    self.assertEqual(value, self.expected['lnames'][i])
+                    self.logger.info(self.log.message_build(self.test_last_name_input.__doc__, x,
+                                                            value, self.expected['lnames'][i]))
+                    x.clear()
+
+                # Negative test
+                else:
+                    # Inserting text to check
+                    self.enter_text(self.locator.lname, self.expected['lnames'][i])
+                    # Finding input element
+                    y = self.expected['lnames'][i]
+                    x = self.driver.find_element(*self.locator.lname)
+                    # Getting inserted text from input
+                    value = x.get_attribute('validationMessage')
+                    # Asserting valid massage that must be in input field cause text input is not valid
+                    # If message isn't popped that means bug
+                    self.assertNotEqual(value, '')
+                    self.logger.info(self.log.message_build(self.test_last_name_input.__doc__, x,
+                                                            value, self.expected['lnames'][i]))
+                    x.clear()
         except Exception as e:
             self.screenshoter.page_screenshot('test_last_name_input')
             self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
@@ -94,16 +137,81 @@ class TestAP(unittest.TestCase, BasePage):
         Description: testing input email field
         """
         try:
-            # Inserting text to check
-            self.enter_text(self.locator.fname, self.expected['email'])
-            # Finding input element
-            x = self.driver.find_element(*self.locator.fname)
-            # Getting inserted text from input
-            value = x.get_attribute('value')
-            # Asserting if text in element is the same in json
-            self.assertEqual(value, self.expected['email'])
-            self.logger.info(self.log.message_build(self.test_email_input.__doc__, x,
-                                                    value, self.expected['email']))
+            email_regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{1,3}$'
+            # Passing through all data json emails
+            for i in range(len(self.expected['emails']) - 1):
+
+                # Positive test
+                if re.search(email_regex, self.expected['emails'][i]):
+                    # Inserting text to check
+                    self.enter_text(self.locator.fname, self.expected['emails'][i])
+                    # Finding input element
+                    x = self.driver.find_element(*self.locator.fname)
+                    # Getting inserted text from input
+                    value = x.get_attribute('value')
+                    # Asserting if text in element is the same in json
+                    self.assertEqual(value, self.expected['emails'][i])
+                    self.logger.info(self.log.message_build(self.test_email_input.__doc__, x,
+                                                            value, self.expected['emails'][i]))
+                    x.clear()
+
+                # Negative test
+                else:
+                    self.enter_text(self.locator.fname, self.expected['emails'][i])
+                    # Finding input element
+                    x = self.driver.find_element(*self.locator.fname)
+                    # Getting inserted text from input
+                    value = x.get_attribute('validationMessage')
+                    # Asserting valid massage that must be in input field cause text input is not valid
+                    # If message isn't popped that means bug
+                    self.assertNotEqual(value, '')
+                    self.logger.info(self.log.message_build(self.test_email_input.__doc__, value,
+                                                            value, Exception))
+                    x.clear()
+        except Exception as e:
+            self.screenshoter.page_screenshot('test_email_input')
+            self.logger.exception(f"{self.test_email_input.__doc__}{e}")
+            raise
+
+    def test_phone_input(self):
+        """
+        Name: Artiom
+        Function Name: test_phone_input
+        Description: testing input phone field
+        """
+        try:
+            phone_regex = '\d\S{7}'
+            # Passing through all data json phones
+            for i in range(len(self.expected['phones']) - 1):
+
+                # Positive test
+                if re.search(phone_regex, self.expected['phones'][i]) and len(
+                        self.expected['phones'][i]) == int(os.getenv('PHONE_NUMBER_LENGTH')):
+                    # Inserting text to check
+                    self.enter_text(self.locator.fname, self.expected['phones'][i])
+                    # Finding input element
+                    x = self.driver.find_element(*self.locator.fname)
+                    # Getting inserted text from input
+                    value = x.get_attribute('value')
+                    # Asserting if text in element is the same in json
+                    self.assertEqual(value, self.expected['phones'][i])
+                    self.logger.info(self.log.message_build(self.test_email_input.__doc__, x,
+                                                            value, self.expected['phones'][i]))
+                    x.clear()
+
+                # Negative test
+                else:
+                    self.enter_text(self.locator.fname, self.expected['phones'][i])
+                    # Finding input element
+                    x = self.driver.find_element(*self.locator.fname)
+                    # Getting inserted text from input
+                    value = x.get_attribute('validationMessage')
+                    # Asserting valid massage that must be in input field cause text input is not valid
+                    # If message isn't popped that means bug
+                    self.assertNotEqual(value, '')
+                    self.logger.info(self.log.message_build(self.test_email_input.__doc__, value,
+                                                            value, Exception))
+                    x.clear()
         except Exception as e:
             self.screenshoter.page_screenshot('test_email_input')
             self.logger.exception(f"{self.test_email_input.__doc__}{e}")
@@ -157,23 +265,6 @@ class TestAP(unittest.TestCase, BasePage):
             self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
-    def test_phone_input(self):
-        """
-        Name: Artiom
-        Function Name: test_phone_input
-        Description: testing input phone field
-        """
-        try:
-            self.enter_text(self.locator.phone, self.expected['phone'])
-            element = self.driver.find_element(*self.locator.phone)
-            x = element.get_attribute('value')
-            self.assertEqual(x, self.expected['phone'])
-            self.logger.info(self.log.message_build(self.test_fname_input.__doc__, element, x, self.expected['phone']))
-        except Exception as e:
-            self.screenshoter.page_screenshot('test_phone_input')
-            self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
-            raise
-
     def test_radios(self):
         """
         Name: Artiom
@@ -185,7 +276,8 @@ class TestAP(unittest.TestCase, BasePage):
             for i in range(len(radios)):
                 radios[i].click()
                 self.assertTrue(radios[i].is_selected())
-                self.logger.info(self.log.message_build(self.test_radios.__doc__, radios[i], radios[i].is_selected(), True))
+                self.logger.info(
+                    self.log.message_build(self.test_radios.__doc__, radios[i], radios[i].is_selected(), True))
         except Exception as e:
             self.screenshoter.page_screenshot('test_radios')
             self.logger.exception(f"{self.test_radios.__doc__}{e}")

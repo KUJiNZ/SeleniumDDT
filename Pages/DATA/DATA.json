@@ -1,7 +1,10 @@
 {
     "fname": "John",
-    "lname" : "Smith",
+    "lname": "Smith",
     "email": "smith@gmail.com",
+    "fnames": ["John","jOHN","J@hn","J0hn","j@hn"],
+    "lnames": ["Smith","odwaWds","@Wass","W@ss","Sm1th"],
+    "emails": ["smith@gmail.com","smithgmail.com","smithgmail.com","smith@gmailcom"],
     "city":
     {
         "0":"Tel Aviv",
@@ -16,7 +19,8 @@
         "2":"053",
         "3":"054"
     },
-    "phone": "123-45-678",
+    "phone": "12345678",
+    "phones": ["12345678","23445678","123456789","1234567","asdsada"],
     "jsb_fieldset": "Some text",
     "jsb_text": ["Click on Start Loading","Finish"]
 }
