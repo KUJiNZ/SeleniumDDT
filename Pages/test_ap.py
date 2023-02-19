@@ -22,7 +22,7 @@ load_dotenv('.env.test')
 class TestAP(unittest.TestCase, BasePage):
 
     def setUp(self):
-        # BasePage.__init__(self, webdriver.Chrome())
+        BasePage.__init__(self, webdriver.Chrome())
         self.driver = webdriver.Chrome()
         self.locator = PageLocators()
         # WAIT
@@ -40,6 +40,9 @@ class TestAP(unittest.TestCase, BasePage):
 
         # INIT SCREENSHOTER
         self.screenshoter = Screenshoter(self.driver, 'D:/PythonProjects/SeleniumDDT/Pages/Screenshots')
+
+    def tearDown(self):
+        self.driver.quit()
 
     # PERSON INFO AREA
     def test_fname_input(self):
@@ -455,9 +458,6 @@ class TestAP(unittest.TestCase, BasePage):
             self.screenshoter.page_screenshot('test_start_loading')
             self.logger.exception(f"{self.test_set_text.__doc__}{e}")
             raise
-
-    def tearDown(self):
-        self.driver.quit()
 
 
 if __name__ == '__main__':

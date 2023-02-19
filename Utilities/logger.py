@@ -43,7 +43,9 @@ class Logger:
         self.logger.addHandler(self.stdout_handler)
 
     def message_build(self, docstring, element, actual, expected,exception = ''):
-        self.message = docstring + 'Result => Element '
+
+        if docstring is not None:
+            self.message = docstring + 'Result => Element: '
 
         if type(element) is not str:
             if element.tag_name is not None:

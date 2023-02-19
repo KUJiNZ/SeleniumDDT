@@ -22,5 +22,8 @@
     "phone": "12345678",
     "phones": ["12345678","23445678","123456789","1234567","asdsada"],
     "jsb_fieldset": "Some text",
-    "jsb_text": ["Click on Start Loading","Finish"]
+    "jsb_text": ["Click on Start Loading","Finish"],
+
+    "next_page_titles": ["Next Page","Finish"]
+
 }
