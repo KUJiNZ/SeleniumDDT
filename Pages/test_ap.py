@@ -21,9 +21,29 @@ load_dotenv('.env.test')
 
 class TestAP(unittest.TestCase, BasePage):
 
+    # def __init__(self, driver):
+    #     super().__init__(methodName='runTest')
+    #     BasePage.__init__(self, driver)
+    #     self.locator = PageLocators()
+    #     # WAIT
+    #     self.wait = WebDriverWait(self.driver, 10)
+    #
+    #     # INIT Datareader of JSON
+    #     self.util = Datareader('DATA/DATA.json')
+    #     self.expected = self.util.get_data()
+    #
+    #     # INIT LOGGER
+    #     logger_file = 'Logs/' + 'test_ap_' + str(date.today()) + '.log'
+    #     self.log = Logger("test_ap_logger ", logger_file)
+    #     self.logger = self.log.logger
+    #     self.driver.get(os.getenv('URL'))
+    #
+    #     # INIT SCREENSHOTER
+    #     self.screenshoter = Screenshoter(self.driver, 'D:/PythonProjects/SeleniumDDT/Pages/Screenshots')
     def setUp(self):
+        unittest.TestCase.__init__(self, methodName='runTest')
         BasePage.__init__(self, webdriver.Chrome())
-        self.driver = webdriver.Chrome()
+
         self.locator = PageLocators()
         # WAIT
         self.wait = WebDriverWait(self.driver, 10)
@@ -191,9 +211,9 @@ class TestAP(unittest.TestCase, BasePage):
                 # Positive test
                 if re.match(phone_regex, self.expected['phones'][i]):
                     # Inserting text to check
-                    self.enter_text(self.locator.fname, self.expected['phones'][i])
+                    self.enter_text(self.locator.phone, self.expected['phones'][i])
                     # Finding input element
-                    x = self.driver.find_element(*self.locator.fname)
+                    x = self.driver.find_element(*self.locator.phone)
                     # Getting inserted text from input
                     value = x.get_attribute('value')
                     # Asserting if text in element is the same in json
@@ -204,9 +224,9 @@ class TestAP(unittest.TestCase, BasePage):
 
                 # Negative test
                 else:
-                    self.enter_text(self.locator.fname, self.expected['phones'][i])
+                    self.enter_text(self.locator.phone, self.expected['phones'][i])
                     # Finding input element
-                    x = self.driver.find_element(*self.locator.fname)
+                    x = self.driver.find_element(*self.locator.phone)
                     # Getting inserted text from input
                     value = x.get_attribute('validationMessage')
                     # Asserting valid massage that must be in input field cause text input is not valid
@@ -458,7 +478,3 @@ class TestAP(unittest.TestCase, BasePage):
             self.screenshoter.page_screenshot('test_start_loading')
             self.logger.exception(f"{self.test_set_text.__doc__}{e}")
             raise
-
-
-if __name__ == '__main__':
-    unittest.main()
