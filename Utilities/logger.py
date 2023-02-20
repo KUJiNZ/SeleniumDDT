@@ -37,12 +37,12 @@ class Logger:
         self.file_name = file_name
         self.logger = logging.getLogger(self.logger_name)
         self.logger.setLevel("INFO")
-        self.file_handler = logging.FileHandler(self.file_name)
+        self.file_handler = logging.FileHandler(self.file_name, 'a', 'utf-8')
         self.file_handler.setFormatter(logging.Formatter(self.fmt, datefmt='%m/%d/%Y %I:%M:%S%p'))
         self.logger.addHandler(self.file_handler)
         self.logger.addHandler(self.stdout_handler)
 
-    def message_build(self, docstring, element, actual, expected,exception = ''):
+    def message_build(self, docstring, element, actual, expected, exception=''):
 
         if docstring is not None:
             self.message = docstring + 'Result => Element: '
@@ -65,7 +65,9 @@ class Logger:
 
         else:
             self.message += element
-
-        self.message += f"\n\t\tActual: {str(actual)} , Expected: {str(expected)} {exception}"
+        if exception != '' and not None:
+            self.message += f"\n\t\tActual: {str(actual)} , Expected: {str(expected)} {exception}"
+        else:
+            self.message += f"\n\t\tActual: {str(actual)} , Expected: {str(expected)}"
 
         return self.message

@@ -2,6 +2,8 @@ import os
 import re
 import unittest
 from datetime import date
+
+import requests
 from dotenv import load_dotenv
 
 from selenium import webdriver
@@ -23,7 +25,6 @@ load_dotenv('.env.test')
 class TestNextPage(unittest.TestCase, BasePage):
     def setUp(self):
         BasePage.__init__(self, webdriver.Chrome())
-        # self.driver = webdriver.Chrome()
         self.locator = PageLocators()
 
         # EXPLICIT WAIT
@@ -40,13 +41,10 @@ class TestNextPage(unittest.TestCase, BasePage):
         self.driver.get(os.getenv('URL'))
 
         # INIT SCREENSHOTER
-        self.screenshoter = Screenshoter(self.driver, 'D:/PythonProjects/SeleniumDDT/Pages/Screenshots')
+        self.screenshoter = Screenshoter(self.driver, 'D:\PythonRepos\SeleniumDDTPython\Pages\Screenshots')
 
         # WINDOW HANDLES
         self.parent_handle = self.driver.current_window_handle
-
-    def tearDown(self):
-        self.driver.quit()
 
     def test_link_next_page(self):
         """
@@ -57,6 +55,7 @@ class TestNextPage(unittest.TestCase, BasePage):
         try:
             # Find and open link in new tab
             x = self.driver.find_element(*self.locator.next_page)
+            # Pass to opened tab
             self.driver.execute_script('window.open(arguments[0]);', x)
             # Switch to new opened tab
             self.driver.switch_to.window(self.driver.window_handles[1])
@@ -93,23 +92,26 @@ class TestNextPage(unittest.TestCase, BasePage):
             for locator in self.locator.links_set:
                 # Find and open link in new tab
                 x = self.driver.find_element(*locator)
-                y = x.text
-                self.driver.execute_script('window.open(arguments[0]);', x)
-                # Switch to new opened tab
-                self.driver.switch_to.window(self.driver.window_handles[1])
-                # Assert if page loaded by title
-                self.assertFalse('404' in self.driver.title)
+                # Assert if page loaded by response status
+                response = requests.get(x.get_attribute('href'))
+                self.assertTrue(response, 200)
                 self.logger.info(
-                    self.log.message_build(self.test_link_next_page.__doc__, y, self.driver.title, 'Not 404'))
-                # Close current tab
-                self.driver.close()
-                # Return to calling tab
-                self.driver.switch_to.window(self.parent_handle)
+                    self.log.message_build(self.test_links_is_working.__doc__, x, response, '200'))
+                # self.driver.execute_script('window.open(arguments[0]);', x)
+                # # Switch to new opened tab
+                # self.driver.switch_to.window(self.driver.window_handles[1])
+                # # Close current tab
+                # self.driver.close()
+                # # Return to calling tab
+                # self.driver.switch_to.window(self.parent_handle)
 
         except Exception as e:
             self.screenshoter.page_screenshot('test_links_is_working')
-            self.logger.exception(f"{self.test_link_next_page.__doc__}{e}")
+            self.logger.exception(f"{self.test_links_is_working.__doc__}{e}")
             raise
+
+    def tearDown(self):
+        self.driver.quit()
 
 
 if __name__ == '__main__':

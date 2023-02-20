@@ -1,5 +1,4 @@
-from datetime import date
-from selenium import webdriver
+import datetime
 
 
 class Screenshoter(object):
@@ -14,8 +13,9 @@ class Screenshoter(object):
         self.dir_path = dir_path
 
     def page_screenshot(self, file_name):
-        # print(self.dir_path + '/' + file_name + str(datetime.now()) + '.png')
-        if self.driver.save_screenshot(self.dir_path + '/' + file_name + '_' + str(date.today()) + '.png'):
+        time = str(datetime.datetime.now()).replace(' ', '-').replace('.', '-').replace(':', '_')
+        print(time)
+        if self.driver.save_screenshot(self.dir_path + '/' + file_name + '_' + time + '.png'):
             print("Screenshot Saved")
         else:
             print("Fail to save screenshot")

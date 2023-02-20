@@ -19,6 +19,7 @@ class BasePage(object):
         """ This function is called every time a new object of the base class is created"""
         self.driver = driver
 
+
     def click(self, by_locator):
         """ Performs click on web element whose locator is passed to it"""
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator)).click()
