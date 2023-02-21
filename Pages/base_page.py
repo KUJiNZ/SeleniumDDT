@@ -1,11 +1,5 @@
-import os
 
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -18,7 +12,6 @@ class BasePage(object):
     def __init__(self, driver):
         """ This function is called every time a new object of the base class is created"""
         self.driver = driver
-
 
     def click(self, by_locator):
         """ Performs click on web element whose locator is passed to it"""

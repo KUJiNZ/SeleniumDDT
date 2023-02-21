@@ -20,50 +20,39 @@ load_dotenv('.env.test')
 
 
 class TestAP(unittest.TestCase, BasePage):
+    util = None
+    log = None
+    driver = None
 
-    # def __init__(self, driver):
-    #     super().__init__(methodName='runTest')
-    #     BasePage.__init__(self, driver)
-    #     self.locator = PageLocators()
-    #     # WAIT
-    #     self.wait = WebDriverWait(self.driver, 10)
-    #
-    #     # INIT Datareader of JSON
-    #     self.util = Datareader('DATA/DATA.json')
-    #     self.expected = self.util.get_data()
-    #
-    #     # INIT LOGGER
-    #     logger_file = 'Logs/' + 'test_ap_' + str(date.today()) + '.log'
-    #     self.log = Logger("test_ap_logger ", logger_file)
-    #     self.logger = self.log.logger
-    #     self.driver.get(os.getenv('URL'))
-    #
-    #     # INIT SCREENSHOTER
-    #     self.screenshoter = Screenshoter(self.driver, 'D:/PythonProjects/SeleniumDDT/Pages/Screenshots')
-    def setUp(self):
-        BasePage.__init__(self, webdriver.Chrome())
-
-        self.locator = PageLocators()
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.driver = webdriver.Chrome()
+        cls.locator = PageLocators()
         # WAIT
-        self.wait = WebDriverWait(self.driver, 10)
+        cls.wait = WebDriverWait(cls.driver, 10)
 
         # INIT Datareader of JSON
-        self.util = Datareader('DATA/DATA.json')
-        self.expected = self.util.get_data()
+        cls.util = Datareader('DATA/DATA.json')
+        cls.expected = cls.util.get_data()
 
         # INIT LOGGER
         logger_file = 'Logs/' + 'test_ap_' + str(date.today()) + '.log'
-        self.log = Logger("test_ap_logger ", logger_file)
-        self.logger = self.log.logger
-        self.driver.get(os.getenv('URL'))
+        cls.log = Logger("test_ap_logger ", logger_file)
+        cls.logger = cls.log.logger
+        cls.driver.get(os.getenv('URL'))
 
         # INIT SCREENSHOTER
-        self.screenshoter = Screenshoter(self.driver, 'D:\PythonRepos\SeleniumDDTPython\Pages\Screenshots')
+        cls.screenshoter = Screenshoter(cls.driver, 'D:\PythonRepos\SeleniumDDTPython\Pages\Screenshots')
 
-    def tearDown(self):
-        self.driver.quit()
+    def setUp(self) -> None:
+        self.driver.refresh()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
 
     # PERSON INFO AREA
+    # TCAP01
     def test_fname_input(self):
         """
         Name: Artiom
@@ -107,6 +96,7 @@ class TestAP(unittest.TestCase, BasePage):
             self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
+    # TCAP02
     def test_last_name_input(self):
         """
         Name: Artiom
@@ -115,28 +105,28 @@ class TestAP(unittest.TestCase, BasePage):
         """
         try:
             fname_regex = '^[A-Z]\D\S[a-z]{1,40}'
-            for i in range(len(self.expected['lnames']) - 1):
+            for i in range(len(self.expected['lname']) - 1):
 
                 # Positive test
-                if re.match(fname_regex, self.expected['lnames'][i]):
+                if re.match(fname_regex, self.expected['lname'][i]):
                     # Inserting text to check
-                    self.enter_text(self.locator.lname, self.expected['lnames'][i])
+                    self.enter_text(self.locator.lname, self.expected['lname'][i])
                     # Finding input element
                     x = self.driver.find_element(*self.locator.lname)
                     # Getting inserted text from input
                     value = x.get_attribute('value')
                     # Asserting if text in element is the same in json
-                    self.assertEqual(value, self.expected['lnames'][i])
+                    self.assertEqual(value, self.expected['lname'][i])
                     self.logger.info(self.log.message_build(self.test_last_name_input.__doc__, x,
-                                                            value, self.expected['lnames'][i]))
+                                                            value, self.expected['lname'][i]))
                     x.clear()
 
                 # Negative test
                 else:
                     # Inserting text to check
-                    self.enter_text(self.locator.lname, self.expected['lnames'][i])
+                    self.enter_text(self.locator.lname, self.expected['lname'][i])
                     # Finding input element
-                    y = self.expected['lnames'][i]
+                    y = self.expected['lname'][i]
                     x = self.driver.find_element(*self.locator.lname)
                     # Getting inserted text from input
                     value = x.get_attribute('validationMessage')
@@ -144,13 +134,14 @@ class TestAP(unittest.TestCase, BasePage):
                     # If message isn't popped that means bug
                     self.assertNotEqual(value, '')
                     self.logger.info(self.log.message_build(self.test_last_name_input.__doc__, x,
-                                                            value, self.expected['lnames'][i]))
+                                                            value, self.expected['lname'][i]))
                     x.clear()
         except Exception as e:
             self.screenshoter.page_screenshot('test_last_name_input')
             self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
+    # TCAP03
     def test_email_input(self):
         """
         Name: Artiom
@@ -194,6 +185,7 @@ class TestAP(unittest.TestCase, BasePage):
             self.logger.exception(f"{self.test_email_input.__doc__}{e}")
             raise
 
+    # TCAP04
     def test_phone_input(self):
         """
         Name: Artiom
@@ -205,7 +197,6 @@ class TestAP(unittest.TestCase, BasePage):
             phone_regex = '\d\S{7}$'
             # Passing through all data json phones
             for i in range(len(self.expected['phone']) - 1):
-
                 # Positive test
                 if re.match(phone_regex, self.expected['phone'][i]):
                     # Inserting text to check
@@ -230,7 +221,7 @@ class TestAP(unittest.TestCase, BasePage):
                     # Asserting valid massage that must be in input field cause text input is not valid
                     # If message isn't popped that means bug
                     self.assertNotEqual(value, '')
-                    self.logger.info(self.log.message_build(self.test_email_input.__doc__, value,
+                    self.logger.info(self.log.message_build(self.test_email_input.__doc__, self.expected['phone'][i],
                                                             value, 'Validation Message'))
                     x.clear()
         except Exception as e:
@@ -238,6 +229,7 @@ class TestAP(unittest.TestCase, BasePage):
             self.logger.exception(f"{self.test_phone_input.__doc__}{e}")
             raise
 
+    # TCAP05
     def test_city_combobox(self):
         """
         Name: Artiom
@@ -264,6 +256,7 @@ class TestAP(unittest.TestCase, BasePage):
             self.logger.exception(f"{self.test_fname_input.__doc__}{e}")
             raise
 
+    # TCAP06
     def test_mobile_combobox(self):
         """
         Name: Artiom

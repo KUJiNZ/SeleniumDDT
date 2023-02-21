@@ -1,5 +1,4 @@
 import os
-import re
 import unittest
 from datetime import date
 
@@ -7,8 +6,6 @@ import requests
 from dotenv import load_dotenv
 
 from selenium import webdriver
-from selenium.webdriver import Keys
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
@@ -23,28 +20,39 @@ load_dotenv('.env.test')
 
 
 class TestNextPage(unittest.TestCase, BasePage):
-    def setUp(self):
-        BasePage.__init__(self, webdriver.Chrome())
-        self.locator = PageLocators()
+    driver = None
+    util = None
+    log = None
 
-        # EXPLICIT WAIT
-        self.wait = WebDriverWait(self.driver, 10)
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.driver = webdriver.Chrome()
+        cls.locator = PageLocators()
+        # WAIT
+        cls.wait = WebDriverWait(cls.driver, 10)
 
         # INIT Datareader of JSON
-        self.util = Datareader('DATA/DATA.json')
-        self.expected = self.util.get_data()
+        cls.util = Datareader('DATA/DATA.json')
+        cls.expected = cls.util.get_data()
 
         # INIT LOGGER
-        logger_file = 'Logs/' + 'test_nextpage_' + str(date.today()) + '.log'
-        self.log = Logger("test_nextpage_logger ", logger_file)
-        self.logger = self.log.logger
-        self.driver.get(os.getenv('URL'))
+        logger_file = 'Logs/' + 'test_ap_' + str(date.today()) + '.log'
+        cls.log = Logger("test_ap_logger ", logger_file)
+        cls.logger = cls.log.logger
+        cls.driver.get(os.getenv('URL'))
 
         # INIT SCREENSHOTER
-        self.screenshoter = Screenshoter(self.driver, 'D:\PythonRepos\SeleniumDDTPython\Pages\Screenshots')
+        cls.screenshoter = Screenshoter(cls.driver, 'D:\PythonRepos\SeleniumDDTPython\Pages\Screenshots')
 
         # WINDOW HANDLES
-        self.parent_handle = self.driver.current_window_handle
+        cls.parent_handle = cls.driver.current_window_handle
+
+    def setUp(self) -> None:
+        self.driver.refresh()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
 
     def test_link_next_page(self):
         """
@@ -76,6 +84,7 @@ class TestNextPage(unittest.TestCase, BasePage):
             self.assertEqual(self.driver.title, self.expected['next_page_titles'][1])
             self.logger.info(self.log.message_build(self.test_link_next_page.__doc__, y,
                                                     self.driver.title, self.expected['next_page_titles'][1]))
+            self.driver.switch_to.window(self.parent_handle)
         except Exception as e:
             self.screenshoter.page_screenshot('test_link_next_page')
             self.logger.exception(f"{self.test_link_next_page.__doc__}{e}")
@@ -110,9 +119,5 @@ class TestNextPage(unittest.TestCase, BasePage):
             self.logger.exception(f"{self.test_links_is_working.__doc__}{e}")
             raise
 
-    def tearDown(self):
-        self.driver.quit()
 
 
-if __name__ == '__main__':
-    unittest.main()

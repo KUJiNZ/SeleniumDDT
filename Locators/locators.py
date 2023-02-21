@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class PageLocators(object):
+    # test_ap
     # Personal Information area
     fname = (By.NAME, 'fname')
     lname = (By.NAME, 'lname')
@@ -24,6 +25,7 @@ class PageLocators(object):
     JS_text = (By.ID, 'startLoad')
     JSB_startloading = (By.CSS_SELECTOR, 'body > fieldset:nth-child(4) > button:nth-child(9)')
 
+    # test_nextpage
     # Links area
     next_page = (By.NAME, 'nextPage')
     windy = (By.NAME, 'myLink')
@@ -31,7 +33,7 @@ class PageLocators(object):
     java_book = (By.CSS_SELECTOR, 'body > fieldset:nth-child(5) > a:nth-child(8)')
     youtube = (By.CSS_SELECTOR, 'body > fieldset:nth-child(5) > br:nth-child(11)')
     # links_set = [windy, tera_santa, java_book, youtube]
-    links_set = [windy,tera_santa,java_book,youtube ]
+    links_set = [windy, tera_santa, java_book, youtube]
 
     # Next Page area
     np_button_change_title = (By.CSS_SELECTOR, 'body > button')

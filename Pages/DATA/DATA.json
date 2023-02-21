@@ -2,7 +2,7 @@
     "fname": ["John","jOHN","J@hn","J0hn","j@hn"],
     "lname": ["Smith","odwaWds","@Wass","W@ss","Sm1th"],
     "email": ["smith@gmail.com","smithgmail.com","smithgmail.com","smith@gmailcom","awdawdadad"],
-    "phone": ["12345678","23445678","123456789","1234567","asdsada"],
+    "phone": ["12345678","asdsada","23445678","123456789","1234567","asdsada"],
     "city":
     {
         "0":"Tel Aviv",
